@@ -93,6 +93,13 @@
               <%= f.label :vessel_name %><br />
               <%= f.text_field :vessel_name, class: "form-control", autofocus: true %>
             </div>
+	    <div class="field">
+              <%= f.label :subscription_tier %><br />
+	      <%= f.select :subscription_tier, User::SUBSCRIPTION_TIER, { prompt: 'Choose one' }, class: "form-control", autofocus: true, required: true %>
+	    </div>
+	    <div class="field">
+              <%= f.label :licence %><br />
+	      <%= f.file_field :licence %>
             <div class="field">
               <%= f.label :password %>
               <% if @minimum_password_length %>

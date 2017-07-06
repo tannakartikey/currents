@@ -23,4 +23,6 @@ en:
   date:
     formats:
       default: "%d/%m/%Y"
-
+  errors:
+    messages:
+       extension_whitelist_error: ': only image files are allowed.'
