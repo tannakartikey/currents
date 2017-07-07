@@ -95,21 +95,22 @@
             </div>
 	    <div class="field">
               <%= f.label :subscription_tier %><br />
-	      <%= f.select :subscription_tier, User::SUBSCRIPTION_TIER, { prompt: 'Choose one' }, class: "form-control", autofocus: true, required: true %>
+	      <%= f.select :subscription_tier, User::SUBSCRIPTION_TIER, { prompt: 'Choose one' }, class: "form-control subscription_tier", autofocus: true, required: true %>
 	    </div>
-	    <div class="field">
+	    <div class="field licence" style="display: none;">
               <%= f.label :licence %><br />
-	      <%= f.file_field :licence %>
+	      <%= f.file_field :licence, name: 'new_user_licence' %>
+	    </div>
             <div class="field">
               <%= f.label :password %>
               <% if @minimum_password_length %>
               <em>(<%= @minimum_password_length %> characters minimum)</em>
               <% end %><br />
-              <%= f.password_field :password, class: "form-control", autocomplete: "off", required: true %>
+              <%= f.password_field :password, class: "form-control", autocomplete: "off", required: true, name: "new_user_password" %>
             </div>
             <div class="field">
               <%= f.label :password_confirmation %><br />
-              <%= f.password_field :password_confirmation,  class: "form-control", autocomplete: "off" %>
+              <%= f.password_field :password_confirmation,  class: "form-control", autocomplete: "off", name: "new_user_confirm_password" %>
             </div>
             <div class="panel-footer">
             <button type="submit" class="btn btn-block btn-inverse mt-lg">
