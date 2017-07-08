@@ -5,18 +5,24 @@ $ ->
   $(".new_user").validate
     debug: true
     rules:
-      new_user_licence:
+      "user[licence]":
         required:
           depends: () ->
-            $('#user_subscription_tier').val().toLowerCase() == "commercial"
-      password:
+            if($('#user_subscription_tier').val().toLowerCase() == "commercial")
+              true
+            else
+              console.log('false matched')
+              $("#user_licence").rules('remove', 'required')
+      "user[password]":
         minlength: 6
-      confirm_password:
+      "user[password_confirmation]":
         minlength: 6
+        #equalTo: "user[password]"
     messages:
-      password:
+      "user[password]":
         minlength: "At least 6 chars are required"
-        equalTo: "#user_password"
+      "user[password_confirmation]":
+        equalTo: "Password and confirm password should be the same."
 
   showLicenceUpload = (value) ->
     if(value.toLowerCase() == "commercial")

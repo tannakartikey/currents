@@ -34,6 +34,9 @@ gem 'ffaker'
 gem 'kaminari'
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'fog'
+gem 'fog-aws'
+gem 'mini_magick'
 
 group :production do
   gem 'rails_12factor'
