@@ -1,4 +1,5 @@
 class StripeController < ApplicationController
+  Thread.abort_on_exception=true unless Rails.env.production?
   protect_from_forgery :except => :events
   def events
     request.body.rewind
@@ -8,8 +9,9 @@ class StripeController < ApplicationController
     if Rails.env.production?
       begin
         event = Stripe::Event.retrieve(event_id)  #so that we know event is valid and from Stripe
+        event = JSON.parse(event.to_json, object_class: OpenStruct)
       rescue => error
-        PartyFoul::RacklessExceptionHandler.handle(error, class: self, method: __method__, params: event_id)
+        GithubIssues.create(error, self, __method__, event_id)
       end
     else
       event = JSON.parse(request.body.read, object_class: OpenStruct)
@@ -26,7 +28,7 @@ class StripeController < ApplicationController
           error_details['user'] = user.inspect
           error_details['event_type'] = event_type
           error_details['event_id'] = event.id
-          PartyFoul::RacklessExceptionHandler.handle(error, class: self, method: __method__, params: error_details)
+          GithubIssues.create(error, self, __method__, event_id)
         ensure
           Rails.logger.flush
         end
